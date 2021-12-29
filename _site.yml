@@ -1,0 +1,14 @@
+name: "my-website"
+navbar: 
+  title: "My Website"
+  left:
+  - text: "Home"
+    href: index.html
+  - text: "States"
+    menu:
+    - text: "PA"
+      href: PA.html
+    - text: "MI"
+      href: MI.html
+output_dir: "docs"
+    

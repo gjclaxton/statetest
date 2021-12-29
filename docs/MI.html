@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title> </title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    States
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="PA.html">PA</a>
+    </li>
+    <li>
+      <a href="MI.html">MI</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore"> </h1>
+
+</div>
+
+
+<style type="text/css">
+  body{
+    font-size: 16px;
+  }
+</style>
+<!-- Introduction -->
+<div id="mental-health-in-michigan" class="section level1">
+<h1>Mental Health in Michigan</h1>
+<hr style="border-top: 4px solid; color: #0077C8"/>
+<p>This fact sheet provides an overview of mental health and substance use disorders in Michigan, including mental illness during the COVID-19 pandemic, the prevalence of common mental health and substance use disorders prior to the pandemic, and coverage and access issues. For comparison, national level data are also included whenever possible.</p>
+<hr style="border: 1px dashed #0077C8;" />
+<!-- end introduction, start mental health prevalence -->
+<div id="mental-illness-prevalence" class="section level2">
+<h2>Mental Illness Prevalence</h2>
+<p>Mental illnesses can be acute or chronic and are diagnosable <a href="https://www.cdc.gov/mentalhealth/learn/index.htm">conditions</a> that affect an individual’s emotional, psychological, and social well-being, and often their behavior. These conditions include depression, anxiety, schizophrenia, and mood or personality disorders, among others.</p>
+<ul>
+<li><p>In light of the COVID-19 pandemic, mental health conditions have been exacerbated. More than three in ten adults in the U.S. have <a href="https://www.kff.org/other/state-indicator/adults-reporting-symptoms-of-anxiety-or-depressive-disorder-during-covid-19-pandemic/">reported</a> symptoms of anxiety and/or depressive disorder since May 2020. In comparison, in 2019, approximately one in ten adults reported symptoms of <a href="https://www.cdc.gov/nchs/data/nhis/earlyrelease/ERmentalhealth-508.pdf">anxiety and/or depressive disorder</a>.</p></li>
+<li><p>As shown in the figure below, from September 29 to October 11, 2021, 29.8% of adults in Michigan reported symptoms of <a href="https://www.kff.org/other/state-indicator/adults-reporting-symptoms-of-anxiety-or-depressive-disorder-during-covid-19-pandemic/">anxiety and/or depressive disorder</a>, compared to 31.6% of adults in the U.S.</p></li>
+</ul>
+<p><img src="MI_files/figure-html/pulsefig-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>Many individuals reported having a mental illness even before the pandemic. The share of adults in Michigan with <a href='https://www.kff.org/other/state-indicator/adults-reporting-any-mental-illness-in-the-past-year'>any mental illness</a> was 20.3% in 2018-2019, which was similar to the U.S. share (19.9%).</p></li>
+<li><p>As shown in the figure below, prior to the pandemic, 16.5% of adolescents and 8.2% of adults in Michigan reported having a <a href = 'https://www.kff.org/other/state-indicator/individuals-reporting-a-major-depressive-episode-in-the-past-year/'>major depressive episode in the past year</a href>, which was similar to the U.S. shares (15.1% and 7.5%, respectively).</p></li>
+</ul>
+<p><img src="MI_files/figure-html/mde_pies-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<hr style="border: 1px dashed #0077C8;" />
+</div>
+<div id="substance-use-and-related-deaths" class="section level2">
+<h2>Substance Use and Related Deaths</h2>
+<p>Substance use disorder is using illicit drugs or meeting criteria for alcohol dependence or abuse, defined based on a person reporting a <a href="https://www.ncbi.nlm.nih.gov/books/NBK92053/table/ch2.t5/">“pattern of substance use leading to clinically significant impairment or distress.”</a> There has been increased concern around substance use during the pandemic. In September 2020, <a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2776559">15.1%</a> of U.S. adults reported new or increased substance use due to pandemic-related stress. Deaths due to drug overdose also <a href="https://www.cdc.gov/nchs/nvss/vsrr/drug-overdose-data.htm">increased</a> from over 72,000 deaths nationally in 2019 to over 93,000 deaths in 2020. The recent uptick in substance use and related deaths <a href="https://www.kff.org/policy-watch/substance-use-issues-are-worsening-alongside-access-to-care/">disproportionately</a> affected many people of color, although white people continue to account for the largest share of deaths due to drug overdose per year.</p>
+<ul>
+<li>As shown in the figure below, deaths due to drug overdose have in Michigan from 19.9 per 100,000 in 2015 to 27.8 per 100,000 in 2020.</li>
+</ul>
+<p><img src="MI_files/figure-html/dog-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><a href="https://www.cdc.gov/drugoverdose/epidemic/index.html">Opioid overdoses</a> have been a primary driver of the fivefold increase in deaths due to drug overdose in the U.S. between <a href="https://www.kff.org/other/state-indicator/drug-overdose-death-rate-per-100000-population/">2000</a> and <a href="https://www.kff.org/other/state-indicator/provisional-2020-overdose-deaths-as-a-percent-of-all-deaths/">2020</a>. The national opioid epidemic began with an increase in deaths from opioid prescriptions through the early 2000s, followed ten years later by a steep increase in deaths from heroin overdose, and shortly thereafter an even sharper increase in deaths from synthetic opioid overdose. The U.S. saw some improvement in opioid-related death rates from 2017 to 2018, before increases began again and sharply accelerated in light of the pandemic.</p>
+<li style="padding-bottom: 12px;">
+In 2020, there were 2,205 <a href="https://www.kff.org/other/state-indicator/provisional-opioid-overdose-deaths/">opioid overdose deaths</a> in Michigan, which accounted for79.5% of all drug overdose deaths in the state.
+</li>
+<p>As shown in the figure below, from 2009 to 2019, the <a href = 'https://www.kff.org/other/state-indicator/opioid-overdose-death-rates/'>age-adjusted death rate due to opioid overdose</a href> increased from 7.5 per 100,000 to 18.5 per 100,000 in Michigan. Over the same period, the age-adjusted death rate increased from 6.6 per 100,000 to 15.5 per 100,000 in the U.S.</p>
+<p><img src="MI_files/figure-html/opioidline-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>In Michigan, 0.4% of people age 12 or older reported <a href='https://www.kff.org/other/state-indicator/past-year-opioid-use-disorder'>opioid dependence or abuse</a> in the past year in 2018-2019.</p></li>
+<li><p>Many individuals reported dependence on other illicit drugs and alcohol leading up to the pandemic. As shown in the figures below, 1.6% of adolescents and 6.1% of adults in Michigan reported having <a href='https://www.kff.org/other/state-indicator/individuals-reporting-alcohol-dependence-or-abuse-in-the-past-year/'>alcohol use disorder</a> in the past year in 2018-2019. Additionally, 3.0% of adolescents and 2.7% of adults in Michigan reported having an <a href='https://www.kff.org/other/state-indicator/individuals-reporting-illicit-drug-dependence-or-abuse-in-the-past-year/'>illicit drug use disorder</a> in the past year in 2018-2019.</p></li>
+</ul>
+<p><img src="MI_files/figure-html/alc-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><br/><br/></p>
+<p><img src="MI_files/figure-html/ill-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<hr style="border: 1px dashed #0077C8;" />
+</div>
+<div id="suicide" class="section level2">
+<h2>Suicide</h2>
+<p><a href= 'https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm'>Suicide</a href> is one of the leading causes of death in the U.S. and has increased in almost every state over time, making it a serious public health concern. Suicidal ideation has also been a concern throughout the pandemic. In September 2020, <a href="https://www.cdc.gov/mmwr/volumes/69/wr/mm6932a1.htm?s_cid=mm6932a1_w">11.9%</a> of U.S adults reported serious thoughts of suicide in the past month. However, data found that suicide deaths in the U.S. <a href="https://jamanetwork.com/journals/jama/fullarticle/2778234">decreased</a> by 5.6% from 2019 to 2020.</p>
+<p>While suicide is often linked to underlying mental health conditions, that is not always the case, as a combination of <a href= 'https://www.cdc.gov/vitalsigns/suicide/index.html'>factors</a href> generally contribute to an individual having thoughts of suicide or attempting suicide. Risk factors can include isolation, relationship struggles, financial or housing insecurity, or problems with physical health.</p>
+<ul>
+<li>As shown in the figure below, Michigan’s <a href = 'https://www.kff.org/other/state-indicator/suicide-rate/'>age-adjusted suicide rate</a href> was higher than the national level in 2019.</li>
+</ul>
+<p><img src="MI_files/figure-html/suicideline-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>In 2018-2019, 4.6% of adults in Michigan had <a href='https://www.kff.org/other/state-indicator/adults-reporting-having-serious-thoughts-of-suicide-in-the-past-year'>serious thoughts of suicide</a> in the past year, which was the same as the U.S. share (4.6%).</p></li>
+<li><p>In 2019, <a href='https://webappa.cdc.gov/sasweb/ncipc/leadcause.html'>suicide</a> was the second leading cause of death among adolescents (ages 12-17) across the U.S.</p></li>
+<li><p>In the U.S., the share of high school students who <a href='https://www.cdc.gov/healthyyouth/data/yrbs/pdf/trends/2019_suicide_trend_yrbs.pdf'>seriously considered attempting suicide</a> was 18.8% in 2019.</p></li>
+</ul>
+<p><br></p>
+<hr style="border: 1px dashed #0077C8;" />
+</div>
+<div id="mental-health-workforce" class="section level2">
+<h2>Mental Health Workforce</h2>
+<p>Mental health professionals include psychiatrists, psychologists, psychiatric nurses, addiction counselors, and mental health or family and marriage counselors. Many people in need of mental health care or substance use treatment are unable to access it in a timely manner due to provider shortages, particularly in rural areas. There is concern that these provider shortages may be more pronounced due to increased demand during the pandemic. However, the recent shift toward telemedicine for mental health services may alleviate some issues with accessing providers.</p>
+<ul>
+<li><p>Health Professional Shortage Area (HPSA) designations are used to identify areas that are experiencing a shortage of health professionals. Mental health HPSA designations are primarily based on the number of psychiatrists relative to the population.</p></li>
+<li><p>As shown in the table below, the percent of need for mental health professionals met in Michigan is 29.8%, compared to the national percent of need met (28.1%). <br> <br/><br/> <!-- <table class="table table-hover table-condensed table-bordered" style="border-bottom: 0;border-bottom: 0;">
+ <thead>
+<tr><th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; color: white !important;padding-right: 4px; padding-left: 4px; background-color: #0077c8 !important;" colspan="3"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Mental Health Care Health Professional Shortage Areas (HPSAs), September 2021</div></th></tr>
+  <tr>
+   <th style="text-align:left;vertical-align: middle !important;">  </th>
+   <th style="text-align:center;vertical-align: middle !important;"> Percent of<br>Need Met </th>
+   <th style="text-align:center;vertical-align: middle !important;"> Practitioners Needed to<br>Remove HPSA Designation </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Michigan </td>
+   <td style="text-align:center;"> 29.8% </td>
+   <td style="text-align:center;"> 188 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> United States </td>
+   <td style="text-align:center;"> 28.1% </td>
+   <td style="text-align:center;"> 6,559 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>SOURCE: </small></span> <sup></sup> <small>Bureau of Health Workforce, Health Resources and Services Administration, <a href="https://data.hrsa.gov/Default/GenerateHPSAQuarterlyReport">Designated Health Professional Shortage Areas Statistics: Designated HPSA Quarterly Summary</a>, as of September 30, 2021.</small>
+</td></tr></tfoot>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>NOTE: </small></span> <sup></sup> <small>Percent of need met is defined as the ratio of available psychiatrists to the number needed to eliminate the HPSA designation. Calculations are based on the number of psychiatrists and do not include other mental health care professionals.</small>
+</td></tr></tfoot>
+</table>
+
+  --></p>
+<table class="table table-hover table-condensed table-bordered" style="border-bottom: 0;border-bottom: 0;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; color: white !important;padding-right: 4px; padding-left: 4px; background-color: #0077c8 !important;" colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Mental Health Care Health Professional Shortage Areas (HPSAs), September 2021
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;vertical-align: middle !important;">
+</th>
+<th style="text-align:center;vertical-align: middle !important;">
+<p>Percent of<br>Need Met</p>
+</th>
+<th style="text-align:center;vertical-align: middle !important;">
+<p>Practitioners Needed to<br>Remove HPSA Designation</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>Michigan</p>
+</td>
+<td style="text-align:center;">
+<p>29.8%</p>
+</td>
+<td style="text-align:center;">
+<p>188</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>United States</p>
+</td>
+<td style="text-align:center;">
+<p>28.1%</p>
+</td>
+<td style="text-align:center;">
+<p>6,559</p>
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<p><span style="font-style: italic;"><small>SOURCE: </small></span> <sup></sup> <small>Bureau of Health Workforce, Health Resources and Services Administration, <a href="https://data.hrsa.gov/Default/GenerateHPSAQuarterlyReport">Designated Health Professional Shortage Areas Statistics: Designated HPSA Quarterly Summary</a>, as of September 30, 2021.</small></p>
+</td>
+</tr>
+</tfoot>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<p><span style="font-style: italic;"><small>NOTE: </small></span> <sup></sup> <small>Percent of need met is defined as the ratio of available psychiatrists to the number needed to eliminate the HPSA designation. Calculations are based on the number of psychiatrists and do not include other mental health care professionals.</small></p>
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ul>
+<hr style="border: 1px dashed #0077C8;" />
+</div>
+<div id="unmet-need-and-barriers-to-care" class="section level2">
+<h2>Unmet Need and Barriers to Care</h2>
+<p>Unmet need refers to a person having a perceived or recommended need for mental health treatment or counseling but not receiving care. Among adults who need mental health or substance use care, some groups are more likely to face barriers to accessing care, including uninsured people, underinsured people, and communities of color. Unmet need for mental health and substance use care is expected to increase due to the pandemic, as mental health conditions have been exacerbated and barriers to accessing care may have worsened.</p>
+<ul>
+<li>As shown in the figure below, among adults in Michigan who reported experiencing symptoms of anxiety and/or depressive disorder, 29.0% reported needing counseling or therapy but <a href="https://www.kff.org/other/state-indicator/unmet-need-for-counseling-or-therapy-among-adults-reporting-symptoms-of-anxiety-and-or-depressive-disorder-during-the-covid-19-pandemic/">not receiving</a> it in the past four weeks, compared to the U.S. average of 26.9%.</li>
+</ul>
+<p><img src="MI_files/figure-html/unmet_plot-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<p><br> - Leading up to the pandemic, large shares of adults with mental illness did not receive care. As shown in the figure below, in Michigan, 71.5% (535,000) of adults with mild mental illness, 48.8% (205,000) of adults with moderate mental illness, and 32.1% (126,000) of adults with serious mental illness in the past year did not <a href = 'https://www.kff.org/other/state-indicator/adults-with-mental-illness-in-past-year-who-did-not-receive-treatment/'>receive mental health treatment</a href>.<br />
+<br/></p>
+<p><img src="MI_files/figure-html/notreatmi-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<ul>
+<li><p>Prior to the pandemic, in 2018-2019, 6.7% (516,000) of adults in Michigan reported an <a href='https://www.kff.org/other/state-indicator/adults-reporting-unmet-need-for-mental-health-treatment-in-the-past-year'>unmet need for mental health treatment</a> in the past year, which was similar to the U.S. share of 6.2% (15.4 million). Unmet need refers to a person having a perceived or recommended need for mental health treatment or counseling but not receiving care.</p></li>
+<li><p>Among these adults in Michigan who reported an unmet need for mental health treatment in the past year, 34.9% (180,000) <a href='https://www.kff.org/other/state-indicator/adults-reporting-unmet-need-for-mental-health-treatment-in-the-past-year-because-of-cost'>did not receive care because of cost</a>, which was similar to the U.S. share of 39.7% (6.1 million).</p></li>
+<li><p>In 2019, 12.5% of children ages 3-17 in Michigan <a href="https://www.kff.org/other/state-indicator/child-access-to-mental-health-care/">received mental health care</a> in the past year; compared to 11.1% of children in the U.S. Nationally, many children with mental health needs do not <a href="https://www.cdc.gov/childrensmentalhealth/access.html">receive</a> mental health care. <br></p>
+<hr style="border: 1px dashed #0077C8;" /></li>
+</ul>
+</div>
+<div id="private-insurance" class="section level2">
+<h2>Private Insurance</h2>
+<p>The 2010 Affordable Care Act (ACA) <a href= 'https://www.mentalhealth.gov/get-help/health-insurance'>requires</a href> coverage of mental health and substance use services as an “essential health benefit” under most health insurance plans offered in the individual and small group markets. This requirement does not apply to large group markets, but most large group plans do cover these benefits. The ACA built on the federal Mental Health Parity and Addiction Equity Act of 2008, which requires many group insurance plans that cover mental health and substance use services to do so as generously as medical and surgical services.</p>
+<p>– In order to address the increase in mental health issues during the pandemic, many employers offering health insurance made changes to their mental health resources and benefits. Among firms with 50 or more employees offering health benefits, <a href="https://www.kff.org/report-section/ehbs-2021-summary-of-findings/">39%</a> made one of the following changes: increased coverage for out-of-network mental health and substance use services, waived or reduced cost-sharing, expanded the number of in-network providers, developed new resources such as employee assistance programs, and expanded ways to access services such as telemedicine.</p>
+<ul>
+<li>Leading up to the pandemic, many adults with any mental illness were enrolled in private insurance. As shown in the figure below, in Michigan, 59.5% of adults with any mental illness in the past year had private insurance, compared to 59.6% of adults in the U.S.</li>
+</ul>
+<p><img src="MI_files/figure-html/privfig-1.png" width="75%" style="display: block; margin: auto;" /> <br></p>
+<p>As shown in the figure below, average out-of-pocket spending for all services for adults with mental illness enrolled in large employer health plans is higher than average out-of-pocket spending for adult enrollees without mental illness in Michigan ($998 vs. $508, respectively) as it is in the U.S. overall ($1,347 vs. $671, respectively). This does not include payments for services that enrollees do not claim under their employer coverage. Adults with mental illness enrolled in large employer health plans have higher average total health care spending compared to enrollees without mental illness in Michigan ($7,588 vs. $3,469, respectively) and in the U.S. overall ($8,876 vs. $4,066, respectively).</p>
+<p><br/></p>
+<p><img src="MI_files/figure-html/privoop-1.png" width="75%" style="display: block; margin: auto;" /> <br></p>
+<ul>
+<li>Despite federal and state parity laws, even for people with insurance coverage, a lack of in-network options for mental health and substance use care may affect access to needed services. In 2017, among people with large employer coverage, <a href="https://www.healthsystemtracker.org/brief/surprise-bills-vary-by-diagnosis-and-type-of-admission/">20%</a href> of in-network admissions for mental health and/or substance abuse led to out-of-network charges.</li>
+</ul>
+<hr style="border: 1px dashed #0077C8;" />
+</div>
+<div id="medicaid" class="section level2">
+<h2>Medicaid</h2>
+<p>Medicaid plays a key role in coverage and financing of mental health care and substance use treatment for low-income Americans. Medicaid enrollees face limited out-of-pocket expenses for care and typically have access to a broad range of mental health and substance use services.</p>
+<ul>
+<li><p>Many individuals, including Medicaid enrollees, delayed needed health care when the pandemic began. Data has found that among Medicaid enrollees, <a href="https://www.cms.gov/newsroom/press-releases/cms-data-shows-vulnerable-americans-forgoing-mental-health-care-during-covid-19-pandemic">utilization rates</a> for some health care services have now rebounded to pre-pandemic levels; however, utilization rates for mental health services have lagged.</p></li>
+<li><p>Prior to the pandemic, as shown in the figure below, 29.5% of adults with any mental illness in Michigan reported having Medicaid coverage in the past year in 2018-2019. Of the 29 mental health services in the tables below, all were covered in fee-for-service Medicaid for categorically needy traditional adult beneficiaries. Medicaid managed care plans may provide a broader scope of services.</p></li>
+</ul>
+<p><img src="MI_files/figure-html/caidfig-1.png" width="75%" style="display: block; margin: auto;" /></p>
+<table class="table table-hover table-condensed table-bordered" style="border-bottom: 0;border-bottom: 0;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; color: white !important;padding-right: 4px; padding-left: 4px; background-color: #0077c8 !important;" colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Medicaid Mental Health Services: Institutional Care and Intensive Services
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Mental Health Service
+</th>
+<th style="text-align:center;">
+Covered in Michigan
+</th>
+<th style="text-align:center;">
+Number of States with Service
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Inpatient Psychiatric Hospital
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23-hour Observation
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Psychiatric Residential Treatment
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adult Group Homes
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crisis Services
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+43
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>SOURCE: </small></span> <sup></sup> <small>KFF State Health Facts: <a href="https://www.kff.org/state-category/medicaid-chip/medicaid-behavioral-health-services/institutional-care-and-intensive-service/">2018 Medicaid Behavioral Health Services, Institutional Care and Intensive Services</a>.</small>
+</td>
+</tr>
+</tfoot>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr>
+</tfoot>
+</table>
+<table class="table table-hover table-condensed table-bordered" style="border-bottom: 0;border-bottom: 0;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; color: white !important;padding-right: 4px; padding-left: 4px; background-color: #0077c8 !important;" colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Medicaid Mental Health Services: Outpatient Facility/Provider Services
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Mental Health Service
+</th>
+<th style="text-align:center;">
+Covered in Michigan
+</th>
+<th style="text-align:center;">
+Number of States with Service
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Case Management
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Day Treatment
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Partial Hospitalization
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Psychosocial Rehabilitation
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Intensive Outpatient Treatment
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mental Health Rehabilitation
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ADL/Skills Training
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Assertive Community Treatment
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Psychiatric Services - Evaluation
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Psychiatric Services - Testing
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Psychological Testing
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Individual Therapy
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group Therapy
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+45
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Family Therapy
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+46
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>SOURCE: </small></span> <sup></sup> <small>KFF State Health Facts: <a href="https://www.kff.org/state-category/medicaid-chip/medicaid-behavioral-health-services/outpatient-facility-services-and-or-provider-services/">2018 Medicaid Behavioral Health Services, Outpatient Facility Services and/or Provider Services</a>.</small>
+</td>
+</tr>
+</tfoot>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr>
+</tfoot>
+</table>
+<table class="table table-hover table-condensed table-bordered" style="border-bottom: 0;border-bottom: 0;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; color: white !important;padding-right: 4px; padding-left: 4px; background-color: #0077c8 !important;" colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Medicaid Substance Use Disorder (SUD) Services
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Substance Use Disorder Service
+</th>
+<th style="text-align:center;">
+Covered in Michigan
+</th>
+<th style="text-align:center;">
+Number of States with Service
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Inpatient Detoxification
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Residential Rehabilitation
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Outpatient Detoxification
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+31
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Burprenorphine for MAT
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Oral Naltrexone for MAT
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Injectable Naltrexone for MAT
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Methadone for MAT
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+41
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Suboxone Treatment
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+44
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Intensive Outpatient Treatment for SUD
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Smoking/Tobacco Cessation Counseling
+</td>
+<td style="text-align:center;">
+Yes
+</td>
+<td style="text-align:center;">
+37
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>SOURCE: </small></span> <sup></sup> <small>KFF State Health Facts: <a href="https://www.kff.org/state-category/medicaid-chip/medicaid-behavioral-health-services/substance-use-disorder-sud-services/">2018 Medicaid Substance Use Disorder (SUD) Services</a>.</small>
+</td>
+</tr>
+</tfoot>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;"><small>NOTE: </small></span> <sup></sup> <small>MAT refers to Medication Assisted Treatment.</small> <sup></sup>
+</td>
+</tr>
+</tfoot>
+</table>
+<hr style="border: 1px dashed #0077C8;" />
+<h2>
+<b>Notes</b>
+</h2>
+<p><i>Tests measuring statistical significance were at the p&lt;0.05 level and all significant differences are noted with an asterisk.</i> <br> <br> For more information on Mental Health and Substance Use at the state-level, along with sources and/or methods, visit the <a href='https://www.kff.org/state-category/mental-health/'>KFF Mental Health &amp; Substance Use Disorder State Data</a href>. <br> <br> For information pertaining to COVID-19 and Mental Health, visit our analysis: <a href='https://www.kff.org/health-reform/issue-brief/the-implications-of-covid-19-for-mental-health-and-substance-use/'>The Implications of COVID-19 for Mental Health and Substance Use</a href>. <br> <br> <i>State fact sheets designed and created in RStudio by <a href="https://twitter.com/_KendalOrgera">Kendal Orgera</a> and <a href="https://twitter.com/NirmitaPanchal">Nirmita Panchal</a>.</i> <br> <br> <b><i> This work was supported in part by <a href='https://wellbeingtrust.org/'>Well Being Trust</a>. We value our funders. KFF maintains full editorial control over all of its policy analysis, polling, and journalism activities. </b></i></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
